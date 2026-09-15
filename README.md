@@ -59,3 +59,4 @@ Note: AI-generated email replies are saved as drafts so they can be reviewed bef
 
 ## 📸 Workflow Preview
 
+(images/workflow.png)
