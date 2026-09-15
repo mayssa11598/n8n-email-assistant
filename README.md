@@ -50,10 +50,10 @@ Notification      ↓                  ↓
 
 
 ## ⚙️Setup
-Import email-assistant.json into n8n.
-Connect your accounts and credentials.
-Review the workflow settings.
-Test it and activate the workflow.
+* Import email-assistant.json into n8n.
+* Connect your accounts and credentials.
+* Review the workflow settings.
+* Test it and activate the workflow.
 
 Note: AI-generated email replies are saved as drafts so they can be reviewed before being sent.
 
