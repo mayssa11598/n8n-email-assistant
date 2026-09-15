@@ -1,0 +1,631 @@
+{
+  "name": "Email Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -1296,
+        -160
+      ],
+      "id": "c038dee8-dcc2-4d68-89a2-214db7d0fe65",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Urgent",
+              "description": "Emails that require immediate or very prompt attention. This includes urgent problems, deadlines, critical requests, emergencies, service interruptions, or messages where a delayed response could cause a significant problem."
+            },
+            {
+              "category": "Customer Support",
+              "description": "Emails from customers or potential customers asking questions, requesting information, reporting a problem, requesting help, or asking about a product or service."
+            },
+            {
+              "category": "Meeting",
+              "description": "Emails related to scheduling, rescheduling, canceling, or confirming meetings, calls, appointments, interviews, or other events."
+            },
+            {
+              "category": "Finance",
+              "description": "Emails related to invoices, receipts, payments, billing, refunds, expenses, transaction confirmations, or other financial documents and requests."
+            },
+            {
+              "category": "Informational",
+              "description": "Emails that provide information, updates, announcements, reports, or notifications and do not require a significant action or immediate response."
+            },
+            {
+              "category": "Promotional & Marketing",
+              "description": "Marketing emails, newsletters, advertisements, promotional offers, product announcements, discounts, campaigns, or sales content."
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "Please classify the text provided by the user into one of the following categories: {categories}, and use the provided formatting instructions below. Don't explain, and only output the json.\nClassify the email into exactly one category.\n\nIf an email could belong to multiple categories, choose the category that best represents the primary purpose of the email.\n\nIMPORTANT:\nIf the email clearly requires immediate attention, contains an urgent request, critical problem, emergency, or important deadline, classify it as \"Urgent / Immediate Attention Needed\" even if it also belongs to another category."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -1056,
+        -240
+      ],
+      "id": "e17821aa-d93f-4c6b-a98f-0713019207e3",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_141529624123726347"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -576,
+        -528
+      ],
+      "id": "4e7c4719-583e-4a49-818f-1608f98682d4",
+      "name": "Urgent",
+      "webhookId": "63d7844a-1fad-4e75-b5cc-5f286e2c2111",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_6757855612004615905"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -560,
+        -368
+      ],
+      "id": "058b57ed-23cf-4f31-8722-732b7ad4d97d",
+      "name": "Customer Support",
+      "webhookId": "63d7844a-1fad-4e75-b5cc-5f286e2c2111",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_1653758830677945653"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        -208
+      ],
+      "id": "325621c0-1078-413c-896d-9365e025cb74",
+      "name": "Meeting",
+      "webhookId": "63d7844a-1fad-4e75-b5cc-5f286e2c2111",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_252279156375350894"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        -48
+      ],
+      "id": "8445aabd-c4d4-4652-b9d3-38bb1a1042f6",
+      "name": "Finance",
+      "webhookId": "63d7844a-1fad-4e75-b5cc-5f286e2c2111",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_7249328902614990597"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        128
+      ],
+      "id": "0bb86fab-08a1-485b-adff-53b12647a34e",
+      "name": "Informational",
+      "webhookId": "63d7844a-1fad-4e75-b5cc-5f286e2c2111",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_5538835782231743143"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        272
+      ],
+      "id": "c629607f-cccf-4267-8dca-024a7971a6f5",
+      "name": "Promotional & Marketing",
+      "webhookId": "63d7844a-1fad-4e75-b5cc-5f286e2c2111",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=⚠️ ACTION REQUIRED ⚠️\n\n🚨 URGENT EMAIL RECEIVED 🚨\n\nFrom: {{ $('Gmail Trigger').item.json.from.value[0].address }}\nSubject: {{ $('Gmail Trigger').item.json.subject }}\n\nPlease check your inbox immediately.",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -352,
+        -528
+      ],
+      "id": "bd607b9d-04e4-49dc-b664-2e5b20b326d3",
+      "name": "Send a text message",
+      "webhookId": "7d68c7ca-fadb-4980-bec4-217f79571e3c",
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR_TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nvidia/nemotron-3.5-lightning:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        64
+      ],
+      "id": "b7f47270-c9a4-4e2c-b358-d11c871dc6d8",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "YOUR_OPENROUTER_CREDENTIAL_ID",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "==You are a professional customer support representative writing an email response draft\nEMAIL:\nSubject: {{ $('Gmail Trigger').item.json.headers.subject }}\nBody: {{ $('Gmail Trigger').item.json.text || $('Gmail Trigger').item.json.snippet }}\n\nRULES:\n- Address the customer politely by name (or 'Hello' if unknown).\n- Answer the customer's issue strictly adhering to the RELEVANT COMPANY POLICY CONTEXT provided above.\n- If the policy context does not explicitly contain the solution, politely inform the customer that their inquiry has been escalated to the support team.\n- Do NOT make up false promises, dates, or non-existent policy terms.\n- Return ONLY the draft body text with a professional sign-off (e.g., \"Best regards,\\nSupport Team\").\n- If specific dynamic information is needed that is not in the policy context (like a specific date, tracking code, or agent name), represent it clearly as [MISSING: detail description] so it can be edited.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a professional customer support representative writing an email response draft.  Rules: - Write a clear, polite, and helpful response addressing the customer's issue. - Address the customer by name if known (otherwise use a generic polite greeting like \"Hello\"). - Use the summary and action_required context to provide a direct answer or next steps. - Do NOT make up false promises, dates, or non-existent policy details. - Include a placeholders like \"[Insert Date]\" or \"[Insert Link]\" if specific internal information is required. - Do NOT include email headers (like \"Subject:\" or \"To:\"). Return ONLY the email body text. - Sign off professionally (e.g., \"Best regards,\\nSupport Team\")."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -352,
+        -352
+      ],
+      "id": "63a71814-4e38-44d2-a681-5ea62a592097",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "cohere/north-mini-code:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -192
+      ],
+      "id": "2f01e536-c98e-4c73-aba5-4caf227bd859",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "YOUR_OPENROUTER_CREDENTIAL_ID",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=Re: {{ $('Gmail Trigger').item.json.subject }}",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        16,
+        -352
+      ],
+      "id": "e6b59576-b797-4cfa-b143-10f3a4e5905e",
+      "name": "Create a draft",
+      "webhookId": "341fceef-798a-4c17-a958-7b2f73232e47",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Extract the meeting information from the email below.   {{ $('Gmail Trigger').item.json.text }} ",
+        "options": {
+          "systemMessage": "=You are an AI meeting scheduler operating in timezone Africa/Tunis.\nCURRENT TIME: {{ $now }} (Source of truth. Never assume the year).\n\nTASK: Process meeting emails and execute the required action using tools.\n\n1. EXTRACT DETAILS\nParse title, date, start time, duration, location, link, and notes.\n\n2. DATE RESOLUTION\nResolve relative dates (\"tomorrow\", \"next Tuesday\", \"Sept 22\") relative to {{ $now }}. Assume current year unless explicitly stated otherwise. Do not ask for the year.\n\n3. MISSING DATA RULES\n- Missing Date/Time: DO NOT create event. Draft Gmail reply asking sender for missing info.\n- Missing Duration: Default to 30 minutes. Do not ask sender.\n\n4. MANDATORY CALENDAR CHECK & LOGIC\nStep 4a: You MUST FIRST execute the Google Calendar search/get events tool for the target date to fetch existing bookings. NEVER skip this step.\nStep 4b: Compare the target time slot against the retrieved calendar events:\n- IF AVAILABLE (NO OVERLAP): Call \"Create Calendar Event\" tool -> Call \"Gmail Create Draft\" tool (confirmation draft).\n- IF BUSY (OVERLAP DETECTED): DO NOT call \"Create Calendar Event\". Search for the nearest free time slot -> Call \"Gmail Create Draft\" tool (propose alternative slot).\n\nCRITICAL CALENDAR RULE: NEVER invoke the \"Create Calendar Event\" tool without first receiving and verifying free/busy results from the search tool. Double-booking is strictly prohibited.\n\n5. GMAIL DRAFT RULES\nFor ANY required sender response, ALWAYS use \"Gmail Create Draft\" (NEVER auto-send).\n- Subject: \"Re: [original subject]\"\n- Content: Short, professional, state outcome clearly, and use the user's configured signature. Never invent details.\n\nFINAL DIRECTIVE: You MUST execute a tool action (Create Event / Create Draft) before completing the run. Do not end with text explanation alone."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -208,
+        -48
+      ],
+      "id": "4da05e17-ab51-47c6-ab16-e274e6bf6f63",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "cohere/north-mini-code:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        160
+      ],
+      "id": "ba9e75e3-e3ac-47ba-885e-8cfeaaa0205a",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "YOUR_OPENROUTER_CREDENTIAL_ID",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "your-calendar@gmail.com",
+          "mode": "list",
+          "cachedResultName": "YOUR_GOOGLE_ACCOUNT_EMAIL"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "useDefaultReminders": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Use_Default_Reminders', ``, 'boolean') }}",
+        "additionalFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        336,
+        176
+      ],
+      "id": "5d644146-bed4-4a7b-b1e9-f942cf53a1b0",
+      "name": "Create an event in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        224
+      ],
+      "id": "a56c1f57-acf3-44a3-bf01-ad2f29b117db",
+      "name": "Create a draft in Gmail",
+      "webhookId": "bf699e8e-d4fc-4e3c-809c-057db4472522",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_ACCOUNT_EMAIL",
+          "mode": "list",
+          "cachedResultName": "YOUR_GOOGLE_ACCOUNT_EMAIL"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        176,
+        176
+      ],
+      "id": "0cb4188c-7df7-474c-8dd7-503edb447fbd",
+      "name": "Get many events in Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Urgent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Customer Support",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Meeting",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Finance",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Informational",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Promotional & Marketing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Urgent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Support": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meeting": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events in Google Calendar": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ae3c4b9a-16f8-491a-b4f5-bdd53a5bafe9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "931dd1c3cb0526bc2eab91e657e1378da4ee6935583fbc13117d9160bb2fb58d"
+  },
+  "nodeGroups": [],
+  "id": "JOaMbZO6C5guwVGo",
+  "tags": []
+}
